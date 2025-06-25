@@ -3,7 +3,16 @@
   "version": "0.1.0",
   "description": "MCP server for Google Search using Gemini",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "bin": {
     "mcp-gemini-google-search": "./dist/index.js"
   },
