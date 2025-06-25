@@ -6,7 +6,7 @@ import {
   ErrorCode,
   McpError,
 } from "@modelcontextprotocol/sdk/types.js";
-import { GoogleSearchTool, GoogleSearchParams } from "./tools/google-search.js";
+import { createGoogleSearchModel, searchGoogle, GoogleSearchParams } from "./tools/google-search.js";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -27,7 +27,7 @@ const server = new Server(
   }
 );
 
-const googleSearchTool = new GoogleSearchTool(GEMINI_API_KEY);
+const googleSearchModel = createGoogleSearchModel(GEMINI_API_KEY);
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
@@ -76,7 +76,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       query: args.query,
     };
 
-    const result = await googleSearchTool.search(searchParams);
+    const result = await searchGoogle(googleSearchModel, searchParams);
 
     return {
       content: result.content,
