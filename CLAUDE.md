@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture
 
-This project is a Model Context Protocol (MCP) server that provides Google Search functionality using Gemini 2.0 Flash's built-in Google Search feature.
+This project is a Model Context Protocol (MCP) server that provides Google Search functionality using Gemini's built-in Google Search feature.
 
 ### Key Components
 
@@ -22,7 +22,8 @@ This project is a Model Context Protocol (MCP) server that provides Google Searc
   - Environment variable validation is handled in createGoogleSearchAI
 
 - **src/tools/google-search.ts**: Google Search implementation
-  - Uses `@google/genai` SDK to access Gemini 2.0 Flash
+  - Uses `@google/genai` SDK to access Gemini
+  - Model can be configured via `GEMINI_MODEL` environment variable
   - Enables the `googleSearch` tool via `ai.models.generateContent`
   - Extracts grounding metadata from responses to add citation information
   - Reference implementation: https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/tools/web-search.ts

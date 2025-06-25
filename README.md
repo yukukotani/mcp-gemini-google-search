@@ -4,7 +4,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that pr
 
 ## Features
 
-- Uses Gemini 2.0 Flash's built-in Google Search tool (@google/genai SDK)
+- Uses Gemini's built-in Google Search tool (@google/genai SDK)
 - Compliant with MCP standard protocol
 - Written in TypeScript
 - Supports stdio transport
