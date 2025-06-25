@@ -1,4 +1,4 @@
-import { GoogleGenAI, FunctionDeclaration, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
 export interface GoogleSearchParams {
   query: string;
@@ -17,39 +17,46 @@ export function createGoogleSearchAI(apiKey: string): GoogleGenAI {
 
 export async function searchGoogle(ai: GoogleGenAI, params: GoogleSearchParams): Promise<GoogleSearchResult> {
   try {
-    const googleSearchTool: FunctionDeclaration = {
-      name: "googleSearch",
-      parameters: {
-        type: Type.OBJECT,
-        description: "Search Google to get up-to-date information from the web",
-        properties: {
-          query: {
-            type: Type.STRING,
-            description: "Search query"
-          }
-        },
-        required: ["query"]
-      }
-    };
+    if (!params.query || params.query.trim() === '') {
+      throw new Error("Search query cannot be empty");
+    }
 
-    const prompt = `Search for: ${params.query}. Provide comprehensive information from web search results.`;
-    
     const result = await ai.models.generateContent({
       model: "gemini-2.0-flash-exp",
-      contents: prompt,
-      tools: [googleSearchTool]
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: params.query }]
+        }
+      ],
+      config: {
+        tools: [{ googleSearch: {} }]
+      }
     });
     
-    if (!result.response) {
+    if (!result.text) {
       throw new Error("No response from Gemini model");
     }
 
-    const text = result.response.text();
+    // Extract grounding metadata for sources if available
+    let responseText = result.text;
+    const groundingMetadata = (result as any).groundingMetadata;
     
+    if (groundingMetadata?.groundingChunks) {
+      const sources = groundingMetadata.groundingChunks
+        .filter((chunk: any) => chunk.web)
+        .map((chunk: any, index: number) => `[${index + 1}] ${chunk.web.title}: ${chunk.web.uri}`)
+        .join('\n');
+      
+      if (sources) {
+        responseText += '\n\nSources:\n' + sources;
+      }
+    }
+
     return {
       content: [{
         type: "text",
-        text: text || "No results found"
+        text: responseText
       }]
     };
   } catch (error) {
