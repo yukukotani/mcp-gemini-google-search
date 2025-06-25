@@ -22,10 +22,10 @@ git clone https://github.com/yukukotani/mcp-gemini-google-search.git
 cd mcp-gemini-google-search
 
 # 依存関係のインストール
-pnpm install
+npm install
 
 # ビルド
-pnpm run build
+npm run build
 ```
 
 ## 使用方法
@@ -72,21 +72,21 @@ Google で情報を検索します。
 
 ```bash
 # 開発モード（ファイル変更を監視）
-pnpm run dev
+npm run dev
 
 # ビルド
-pnpm run build
+npm run build
 
 # 実行
-pnpm run start
+npm run start
 
 # MCPインスペクターでデバッグ
-pnpm run inspect
+npm run inspect
 ```
 
 ### MCPインスペクターでのデバッグ
 
-`pnpm run inspect` を実行すると、ブラウザで MCP インスペクターが開きます。これにより：
+`npm run inspect` を実行すると、ブラウザで MCP インスペクターが開きます。これにより：
 
 - 利用可能なツールの確認
 - ツールの実行とレスポンスの確認
