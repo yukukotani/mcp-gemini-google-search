@@ -36,7 +36,7 @@ export async function searchGoogle(ai: GoogleGenAI, params: GoogleSearchParams):
       throw new Error("Search query cannot be empty");
     }
 
-    const result = await ai.models.generateContent({
+    const response = await ai.models.generateContent({
       model: "gemini-2.0-flash-exp",
       contents: [
         {
@@ -50,14 +50,14 @@ export async function searchGoogle(ai: GoogleGenAI, params: GoogleSearchParams):
     });
     
     // Extract response text using the same method as web-search.ts
-    const responseText = getResponseText(result.response);
+    const responseText = getResponseText(response);
     
     if (!responseText || responseText.trim() === '') {
       throw new Error("No response from Gemini model");
     }
 
     // Extract grounding metadata from the first candidate
-    const groundingMetadata = result.response?.candidates?.[0]?.groundingMetadata;
+    const groundingMetadata = response?.candidates?.[0]?.groundingMetadata;
     
     let finalText = responseText;
     
