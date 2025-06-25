@@ -18,15 +18,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that pr
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/yukukotani/mcp-gemini-google-search.git
-cd mcp-gemini-google-search
-
-# Install dependencies
-npm install
-
-# Build
-npm run build
+npm install -g mcp-gemini-google-search
 ```
 
 ## Usage
@@ -45,17 +37,17 @@ export VERTEX_LOCATION="us-central1"  # Optional (default: us-central1)
 export GEMINI_MODEL="gemini-2.5-flash"  # Optional (default: gemini-2.5-flash)
 ```
 
-### Claude Desktop Configuration
+### Claude Code Configuration
 
-Add the following to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Add the following to your Claude Code settings:
 
 #### For Google AI Studio
 ```json
 {
   "mcpServers": {
     "gemini-google-search": {
-      "command": "node",
-      "args": ["/path/to/mcp-gemini-google-search/dist/index.js"],
+      "command": "npx",
+      "args": ["mcp-gemini-google-search"],
       "env": {
         "GEMINI_API_KEY": "your-api-key-here",
         "GEMINI_MODEL": "gemini-2.5-flash"
@@ -70,8 +62,8 @@ Add the following to `~/Library/Application Support/Claude/claude_desktop_config
 {
   "mcpServers": {
     "gemini-google-search": {
-      "command": "node",
-      "args": ["/path/to/mcp-gemini-google-search/dist/index.js"],
+      "command": "npx",
+      "args": ["mcp-gemini-google-search"],
       "env": {
         "GEMINI_PROVIDER": "vertex",
         "VERTEX_PROJECT_ID": "your-gcp-project-id",
@@ -99,14 +91,23 @@ Search for the latest TypeScript features
 
 ## Development
 
+To contribute to this project:
+
 ```bash
+# Clone the repository
+git clone https://github.com/yukukotani/mcp-gemini-google-search.git
+cd mcp-gemini-google-search
+
+# Install dependencies
+npm install
+
 # Development mode (watch for file changes)
 npm run dev
 
 # Build
 npm run build
 
-# Run
+# Run locally
 npm run start
 
 # Debug with MCP Inspector
