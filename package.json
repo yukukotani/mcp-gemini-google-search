@@ -4,6 +4,9 @@
   "description": "MCP server for Google Search using Gemini",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "mcp-gemini-google-search": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
