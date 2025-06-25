@@ -6,7 +6,7 @@ This project is inspired by the GoogleSearch tool from [gemini-cli](https://gith
 
 ## Features
 
-- Uses Gemini's built-in Grounding with Google Search feature
+- Uses Gemini's built-in [Grounding with Google Search](https://ai.google.dev/gemini-api/docs/google-search) feature
 - Provides real-time web search results with source citations
 - Compliant with MCP standard protocol
 - Written in TypeScript
