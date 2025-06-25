@@ -15,6 +15,21 @@ export function createGoogleSearchAI(apiKey: string): GoogleGenAI {
   return new GoogleGenAI({ apiKey });
 }
 
+function getResponseText(response: any): string | undefined {
+  const parts = response.candidates?.[0]?.content?.parts;
+  if (!parts) {
+    return undefined;
+  }
+  const textSegments = parts
+    .map((part: any) => part.text)
+    .filter((text: string): text is string => typeof text === 'string');
+
+  if (textSegments.length === 0) {
+    return undefined;
+  }
+  return textSegments.join('');
+}
+
 export async function searchGoogle(ai: GoogleGenAI, params: GoogleSearchParams): Promise<GoogleSearchResult> {
   try {
     if (!params.query || params.query.trim() === '') {
@@ -34,29 +49,68 @@ export async function searchGoogle(ai: GoogleGenAI, params: GoogleSearchParams):
       }
     });
     
-    if (!result.text) {
+    // Extract response text using the same method as web-search.ts
+    const responseText = getResponseText(result.response);
+    
+    if (!responseText || responseText.trim() === '') {
       throw new Error("No response from Gemini model");
     }
 
-    // Extract grounding metadata for sources if available
-    let responseText = result.text;
-    const groundingMetadata = (result as any).groundingMetadata;
+    // Extract grounding metadata from the first candidate
+    const groundingMetadata = result.response?.candidates?.[0]?.groundingMetadata;
     
-    if (groundingMetadata?.groundingChunks) {
-      const sources = groundingMetadata.groundingChunks
-        .filter((chunk: any) => chunk.web)
-        .map((chunk: any, index: number) => `[${index + 1}] ${chunk.web.title}: ${chunk.web.uri}`)
-        .join('\n');
+    let finalText = responseText;
+    
+    if (groundingMetadata) {
+      const sources = groundingMetadata.groundingChunks || [];
+      const supports = groundingMetadata.groundingSupports || [];
       
-      if (sources) {
-        responseText += '\n\nSources:\n' + sources;
+      // Create source list
+      const sourceList: string[] = [];
+      sources.forEach((source: any, index: number) => {
+        if (source.web) {
+          sourceList.push(`[${index + 1}] ${source.web.title} (${source.web.uri})`);
+        }
+      });
+      
+      // Insert citation markers based on grounding supports
+      if (supports.length > 0 && sources.length > 0) {
+        const insertions: Array<{ index: number; text: string }> = [];
+        
+        supports.forEach((support: any) => {
+          if (support.segment && support.groundingChunkIndices) {
+            const endIndex = support.segment.endIndex || 0;
+            const sourceNumbers = support.groundingChunkIndices
+              .map((idx: number) => idx + 1)
+              .sort((a: number, b: number) => a - b);
+            const citationText = `[${sourceNumbers.join(',')}]`;
+            insertions.push({ index: endIndex, text: citationText });
+          }
+        });
+        
+        // Sort insertions by index in descending order to avoid index shifting
+        insertions.sort((a, b) => b.index - a.index);
+        
+        // Apply insertions to the text
+        let modifiedText = finalText;
+        insertions.forEach(insertion => {
+          modifiedText = modifiedText.slice(0, insertion.index) + 
+                        insertion.text + 
+                        modifiedText.slice(insertion.index);
+        });
+        finalText = modifiedText;
+      }
+      
+      // Append source list if available
+      if (sourceList.length > 0) {
+        finalText += '\n\nSources:\n' + sourceList.join('\n');
       }
     }
 
     return {
       content: [{
         type: "text",
-        text: responseText
+        text: finalText
       }]
     };
   } catch (error) {
