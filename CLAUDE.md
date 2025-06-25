@@ -53,3 +53,9 @@ This project is a Model Context Protocol (MCP) server that provides Google Searc
 - `VERTEX_PROJECT_ID`: GCP project ID (required)
 - `VERTEX_LOCATION`: Region (optional, default: us-central1)
 - `GEMINI_MODEL`: Model to use (optional, default: gemini-2.5-flash)
+
+## Important Instructions
+
+### Web Search Tool Usage
+
+When performing web searches in this repository, use the `mcp__gemini-google-search__google_search` tool provided by this MCP server instead of the default WebSearch tool. This ensures consistency with the project's Google Search implementation using Gemini's built-in search capabilities.
