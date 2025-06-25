@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "inspect": "mcp-inspector node dist/index.js"
   },
   "keywords": ["mcp", "gemini", "google-search"],
   "author": "",
@@ -20,6 +21,7 @@
     "@modelcontextprotocol/sdk": "^1.0.4"
   },
   "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.2.0",
     "@types/node": "^22.10.2",
     "typescript": "^5.7.2"
   }
