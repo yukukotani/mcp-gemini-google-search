@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, FunctionDeclarationsTool, SchemaType } from "@google/generative-ai";
+import { GoogleGenerativeAI, FunctionDeclarationsTool, SchemaType, GenerativeModel } from "@google/generative-ai";
 
 export interface GoogleSearchParams {
   query: string;
@@ -37,7 +37,7 @@ export function createGoogleSearchModel(apiKey: string) {
   });
 }
 
-export async function searchGoogle(model: any, params: GoogleSearchParams): Promise<GoogleSearchResult> {
+export async function searchGoogle(model: GenerativeModel, params: GoogleSearchParams): Promise<GoogleSearchResult> {
   try {
     const prompt = `Search for: ${params.query}. Provide comprehensive information from web search results.`;
     
