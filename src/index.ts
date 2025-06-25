@@ -8,22 +8,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { createGoogleSearchAI, searchGoogle, GoogleSearchParams } from "./tools/google-search.js";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_PROVIDER = process.env.GEMINI_PROVIDER;
-
-// Validate required environment variables based on provider
-if (GEMINI_PROVIDER === 'vertex') {
-  const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID;
-  if (!VERTEX_PROJECT_ID) {
-    console.error("Error: VERTEX_PROJECT_ID environment variable is required when using Vertex AI");
-    process.exit(1);
-  }
-} else {
-  if (!GEMINI_API_KEY) {
-    console.error("Error: GEMINI_API_KEY environment variable is required");
-    process.exit(1);
-  }
-}
+// Environment variable validation is now handled in createGoogleSearchAI
 
 const server = new Server(
   {
@@ -37,7 +22,7 @@ const server = new Server(
   }
 );
 
-const googleSearchAI = createGoogleSearchAI(GEMINI_API_KEY || '');
+const googleSearchAI = createGoogleSearchAI();
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {

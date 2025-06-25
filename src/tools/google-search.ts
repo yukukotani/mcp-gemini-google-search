@@ -11,7 +11,7 @@ export interface GoogleSearchResult {
   }>;
 }
 
-export function createGoogleSearchAI(apiKey: string): GoogleGenAI {
+export function createGoogleSearchAI(): GoogleGenAI {
   const provider = process.env.GEMINI_PROVIDER;
   
   if (provider === 'vertex') {
@@ -27,6 +27,11 @@ export function createGoogleSearchAI(apiKey: string): GoogleGenAI {
       project: projectId,
       location
     });
+  }
+  
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY environment variable is required when using Google AI Studio');
   }
   
   return new GoogleGenAI({ apiKey });
