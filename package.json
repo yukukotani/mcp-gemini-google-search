@@ -8,8 +8,8 @@
     "mcp-gemini-google-search": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc -w",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "start": "node dist/index.js",
     "inspect": "mcp-inspector node dist/index.js"
   },
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.2.0",
     "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
     "typescript": "^5.7.2"
   }
 }
