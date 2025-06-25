@@ -33,7 +33,14 @@ npm run build
 ### 環境変数の設定
 
 ```bash
+# Google AI Studio を使用する場合（デフォルト）
 export GEMINI_API_KEY="your-api-key-here"
+export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gemini-2.5-flash）
+
+# Vertex AI を使用する場合
+export GEMINI_PROVIDER="vertex"
+export VERTEX_PROJECT_ID="your-gcp-project-id"
+export VERTEX_LOCATION="us-central1"  # オプション（デフォルト: us-central1）
 export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gemini-2.5-flash）
 ```
 
@@ -41,6 +48,7 @@ export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gem
 
 `~/Library/Application Support/Claude/claude_desktop_config.json` に以下を追加：
 
+#### Google AI Studio を使用する場合
 ```json
 {
   "mcpServers": {
@@ -49,6 +57,24 @@ export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gem
       "args": ["/path/to/mcp-gemini-google-search/dist/index.js"],
       "env": {
         "GEMINI_API_KEY": "your-api-key-here",
+        "GEMINI_MODEL": "gemini-2.5-flash"
+      }
+    }
+  }
+}
+```
+
+#### Vertex AI を使用する場合
+```json
+{
+  "mcpServers": {
+    "gemini-google-search": {
+      "command": "node",
+      "args": ["/path/to/mcp-gemini-google-search/dist/index.js"],
+      "env": {
+        "GEMINI_PROVIDER": "vertex",
+        "VERTEX_PROJECT_ID": "your-gcp-project-id",
+        "VERTEX_LOCATION": "us-central1",
         "GEMINI_MODEL": "gemini-2.5-flash"
       }
     }

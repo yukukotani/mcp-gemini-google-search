@@ -43,4 +43,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### 環境変数
 
+**Google AI Studio の場合（デフォルト）:**
 - `GEMINI_API_KEY`: Google AI Studio の API キー（必須）
+- `GEMINI_MODEL`: 使用するモデル（オプション、デフォルト: gemini-2.5-flash）
+
+**Vertex AI の場合:**
+- `GEMINI_PROVIDER`: "vertex" に設定
+- `VERTEX_PROJECT_ID`: GCP プロジェクト ID（必須）
+- `VERTEX_LOCATION`: リージョン（オプション、デフォルト: us-central1）
+- `GEMINI_MODEL`: 使用するモデル（オプション、デフォルト: gemini-2.5-flash）
