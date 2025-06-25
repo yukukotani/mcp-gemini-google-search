@@ -34,6 +34,7 @@ npm run build
 
 ```bash
 export GEMINI_API_KEY="your-api-key-here"
+export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gemini-2.5-flash）
 ```
 
 ### Claude Desktop での設定
@@ -47,7 +48,8 @@ export GEMINI_API_KEY="your-api-key-here"
       "command": "node",
       "args": ["/path/to/mcp-gemini-google-search/dist/index.js"],
       "env": {
-        "GEMINI_API_KEY": "your-api-key-here"
+        "GEMINI_API_KEY": "your-api-key-here",
+        "GEMINI_MODEL": "gemini-2.5-flash"
       }
     }
   }

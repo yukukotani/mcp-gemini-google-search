@@ -36,8 +36,10 @@ export async function searchGoogle(ai: GoogleGenAI, params: GoogleSearchParams):
       throw new Error("Search query cannot be empty");
     }
 
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-exp",
+      model,
       contents: [
         {
           role: "user",
