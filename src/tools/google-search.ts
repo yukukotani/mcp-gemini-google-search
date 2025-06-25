@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, FunctionDeclarationsTool, SchemaType, GenerativeModel } from "@google/generative-ai";
+import { GoogleGenAI, FunctionDeclaration, Type, Chat } from "@google/genai";
 
 export interface GoogleSearchParams {
   query: string;
@@ -11,37 +11,35 @@ export interface GoogleSearchResult {
   }>;
 }
 
-export function createGoogleSearchModel(apiKey: string) {
-  const genAI = new GoogleGenerativeAI(apiKey);
+export function createGoogleSearchModel(apiKey: string): Chat {
+  const ai = new GoogleGenAI({ apiKey });
   
-  const googleSearchTool: FunctionDeclarationsTool = {
-    functionDeclarations: [{
-      name: "googleSearch",
+  const googleSearchTool: FunctionDeclaration = {
+    name: "googleSearch",
+    parameters: {
+      type: Type.OBJECT,
       description: "Search Google to get up-to-date information from the web",
-      parameters: {
-        type: SchemaType.OBJECT,
-        properties: {
-          query: {
-            type: SchemaType.STRING,
-            description: "Search query"
-          }
-        },
-        required: ["query"]
-      }
-    }]
+      properties: {
+        query: {
+          type: Type.STRING,
+          description: "Search query"
+        }
+      },
+      required: ["query"]
+    }
   };
 
-  return genAI.getGenerativeModel({
+  return ai.chat({
     model: "gemini-2.0-flash-exp",
     tools: [googleSearchTool]
   });
 }
 
-export async function searchGoogle(model: GenerativeModel, params: GoogleSearchParams): Promise<GoogleSearchResult> {
+export async function searchGoogle(chat: Chat, params: GoogleSearchParams): Promise<GoogleSearchResult> {
   try {
     const prompt = `Search for: ${params.query}. Provide comprehensive information from web search results.`;
     
-    const result = await model.generateContent(prompt);
+    const result = await chat.sendMessage(prompt);
     
     if (!result.response) {
       throw new Error("No response from Gemini model");

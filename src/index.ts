@@ -27,7 +27,7 @@ const server = new Server(
   }
 );
 
-const googleSearchModel = createGoogleSearchModel(GEMINI_API_KEY);
+const googleSearchChat = createGoogleSearchModel(GEMINI_API_KEY);
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
@@ -76,7 +76,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       query: args.query,
     };
 
-    const result = await searchGoogle(googleSearchModel, searchParams);
+    const result = await searchGoogle(googleSearchChat, searchParams);
 
     return {
       content: result.content,

@@ -4,7 +4,7 @@
 
 ## 特徴
 
-- Gemini 2.0 Flash の組み込み Google Search ツールを使用
+- Gemini 2.0 Flash の組み込み Google Search ツールを使用（@google/genai SDK）
 - MCP 標準プロトコルに準拠
 - TypeScript で実装
 - stdio トランスポートをサポート
