@@ -1,6 +1,6 @@
 {
   "name": "mcp-gemini-google-search",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server for Google Search using Gemini",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -23,7 +23,11 @@
     "inspect": "mcp-inspector node dist/index.js",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["mcp", "gemini", "google-search"],
+  "keywords": [
+    "mcp",
+    "gemini",
+    "google-search"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
