@@ -2,53 +2,53 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 開発コマンド
+## Development Commands
 
-- `npm run build` - TypeScript をビルド（ESM と CJS の両方を生成）
-- `npm run dev` - ファイル変更を監視してビルド
-- `npm run start` - ビルドされたサーバーを実行
-- `npm run inspect` - MCP インスペクターでデバッグ
-- `npm run prepublishOnly` - リリース前の自動ビルド
+- `npm run build` - Build TypeScript (generates both ESM and CJS)
+- `npm run dev` - Watch for file changes and rebuild
+- `npm run start` - Run the built server
+- `npm run inspect` - Debug with MCP Inspector
+- `npm run prepublishOnly` - Automatic build before release
 
-## アーキテクチャ
+## Architecture
 
-このプロジェクトは Model Context Protocol (MCP) サーバーで、Gemini 2.0 Flash の組み込み Google Search 機能を提供する。
+This project is a Model Context Protocol (MCP) server that provides Google Search functionality using Gemini 2.0 Flash's built-in Google Search feature.
 
-### 主要コンポーネント
+### Key Components
 
-- **src/index.ts**: MCP サーバーのメインエントリポイント
-  - stdio トランスポートを使用
-  - `google_search` ツールを登録・処理
-  - GEMINI_API_KEY 環境変数が必須
+- **src/index.ts**: Main entry point for the MCP server
+  - Uses stdio transport
+  - Registers and handles the `google_search` tool
+  - Environment variable validation is handled in createGoogleSearchAI
 
-- **src/tools/google-search.ts**: Google Search 実装
-  - `@google/genai` SDK を使用して Gemini 2.0 Flash にアクセス
-  - `ai.models.generateContent` で `googleSearch` ツールを有効化
-  - レスポンスから grounding metadata を抽出して引用情報を追加
-  - 参考実装: https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/tools/web-search.ts
+- **src/tools/google-search.ts**: Google Search implementation
+  - Uses `@google/genai` SDK to access Gemini 2.0 Flash
+  - Enables the `googleSearch` tool via `ai.models.generateContent`
+  - Extracts grounding metadata from responses to add citation information
+  - Reference implementation: https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/tools/web-search.ts
 
-### 技術スタック
+### Tech Stack
 
 - TypeScript + Node.js 18+
-- @google/genai (Google の統合 GenAI SDK)
+- @google/genai (Google's unified GenAI SDK)
 - @modelcontextprotocol/sdk
-- tsup でデュアル ESM/CJS ビルド
+- tsup for dual ESM/CJS build
 
-### 型エラー対応時の注意点
+### Type Error Resolution Notes
 
-- `@google/genai` の API は `ai.models.generateContent` を使用
-- tools パラメータは `config: { tools: [{ googleSearch: {} }] }` の形式
-- レスポンスアクセスは `response.candidates[0].content.parts` 構造
-- grounding metadata は `response.candidates[0].groundingMetadata` にある
+- The `@google/genai` API uses `ai.models.generateContent`
+- Tools parameter format: `config: { tools: [{ googleSearch: {} }] }`
+- Response access structure: `response.candidates[0].content.parts`
+- Grounding metadata is located at `response.candidates[0].groundingMetadata`
 
-### 環境変数
+### Environment Variables
 
-**Google AI Studio の場合（デフォルト）:**
-- `GEMINI_API_KEY`: Google AI Studio の API キー（必須）
-- `GEMINI_MODEL`: 使用するモデル（オプション、デフォルト: gemini-2.5-flash）
+**For Google AI Studio (default):**
+- `GEMINI_API_KEY`: Google AI Studio API key (required)
+- `GEMINI_MODEL`: Model to use (optional, default: gemini-2.5-flash)
 
-**Vertex AI の場合:**
-- `GEMINI_PROVIDER`: "vertex" に設定
-- `VERTEX_PROJECT_ID`: GCP プロジェクト ID（必須）
-- `VERTEX_LOCATION`: リージョン（オプション、デフォルト: us-central1）
-- `GEMINI_MODEL`: 使用するモデル（オプション、デフォルト: gemini-2.5-flash）
+**For Vertex AI:**
+- `GEMINI_PROVIDER`: Set to "vertex"
+- `VERTEX_PROJECT_ID`: GCP project ID (required)
+- `VERTEX_LOCATION`: Region (optional, default: us-central1)
+- `GEMINI_MODEL`: Model to use (optional, default: gemini-2.5-flash)

@@ -1,54 +1,55 @@
 # MCP Gemini Google Search
 
-[Model Context Protocol (MCP)](https://modelcontextprotocol.io) サーバーで、Gemini の組み込み Google Search 機能を使用して Google 検索を実行します。
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that provides Google Search functionality using Gemini's built-in Google Search capability.
 
-## 特徴
+## Features
 
-- Gemini 2.0 Flash の組み込み Google Search ツールを使用（@google/genai SDK）
-- MCP 標準プロトコルに準拠
-- TypeScript で実装
-- stdio トランスポートをサポート
+- Uses Gemini 2.0 Flash's built-in Google Search tool (@google/genai SDK)
+- Compliant with MCP standard protocol
+- Written in TypeScript
+- Supports stdio transport
+- Supports both Google AI Studio and Vertex AI
 
-## 必要条件
+## Requirements
 
-- Node.js 18 以降
-- Google AI Studio の API キー（[取得はこちら](https://aistudio.google.com/)）
+- Node.js 18 or later
+- Google AI Studio API key ([Get one here](https://aistudio.google.com/)) or Google Cloud Project with Vertex AI enabled
 
-## インストール
+## Installation
 
 ```bash
-# リポジトリのクローン
+# Clone the repository
 git clone https://github.com/yukukotani/mcp-gemini-google-search.git
 cd mcp-gemini-google-search
 
-# 依存関係のインストール
+# Install dependencies
 npm install
 
-# ビルド
+# Build
 npm run build
 ```
 
-## 使用方法
+## Usage
 
-### 環境変数の設定
+### Environment Variables
 
 ```bash
-# Google AI Studio を使用する場合（デフォルト）
+# For Google AI Studio (default)
 export GEMINI_API_KEY="your-api-key-here"
-export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gemini-2.5-flash）
+export GEMINI_MODEL="gemini-2.5-flash"  # Optional (default: gemini-2.5-flash)
 
-# Vertex AI を使用する場合
+# For Vertex AI
 export GEMINI_PROVIDER="vertex"
 export VERTEX_PROJECT_ID="your-gcp-project-id"
-export VERTEX_LOCATION="us-central1"  # オプション（デフォルト: us-central1）
-export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gemini-2.5-flash）
+export VERTEX_LOCATION="us-central1"  # Optional (default: us-central1)
+export GEMINI_MODEL="gemini-2.5-flash"  # Optional (default: gemini-2.5-flash)
 ```
 
-### Claude Desktop での設定
+### Claude Desktop Configuration
 
-`~/Library/Application Support/Claude/claude_desktop_config.json` に以下を追加：
+Add the following to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
-#### Google AI Studio を使用する場合
+#### For Google AI Studio
 ```json
 {
   "mcpServers": {
@@ -64,7 +65,7 @@ export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gem
 }
 ```
 
-#### Vertex AI を使用する場合
+#### For Vertex AI
 ```json
 {
   "mcpServers": {
@@ -82,46 +83,44 @@ export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gem
 }
 ```
 
-### 利用可能なツール
+### Available Tools
 
 #### google_search
 
-Google で情報を検索します。
+Search Google for information.
 
-**パラメータ:**
-- `query` (string, 必須): 検索クエリ
+**Parameters:**
+- `query` (string, required): Search query
 
-**使用例:**
+**Example:**
 ```
-最新の TypeScript の機能について検索してください
+Search for the latest TypeScript features
 ```
 
-## 開発
+## Development
 
 ```bash
-# 開発モード（ファイル変更を監視）
+# Development mode (watch for file changes)
 npm run dev
 
-# ビルド
+# Build
 npm run build
 
-# 実行
+# Run
 npm run start
 
-# MCPインスペクターでデバッグ
+# Debug with MCP Inspector
 npm run inspect
 ```
 
-### MCPインスペクターでのデバッグ
+### Debugging with MCP Inspector
 
-`npm run inspect` を実行すると、ブラウザで MCP インスペクターが開きます。これにより：
+Running `npm run inspect` will open the MCP Inspector in your browser. This allows you to:
 
-- 利用可能なツールの確認
-- ツールの実行とレスポンスの確認
-- リアルタイムでのデバッグ
+- View available tools
+- Execute tools and see responses
+- Debug in real-time
 
-が可能になります。
-
-## ライセンス
+## License
 
 MIT
