@@ -29,13 +29,13 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "google_search",
-        description: "Search Google to get up-to-date information from the web using Gemini's built-in Google Search capability",
+        description: "Performs a web search using Google Search (via the Gemini API) and returns the results. This tool is useful for finding information on the internet based on a query.",
         inputSchema: {
           type: "object",
           properties: {
             query: {
               type: "string",
-              description: "The search query to look up on Google",
+              description: "The search query to find information on the web.",
             },
           },
           required: ["query"],
