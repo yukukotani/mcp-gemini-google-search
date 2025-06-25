@@ -1,10 +1,13 @@
 # MCP Gemini Google Search
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that provides Google Search functionality using Gemini's built-in Google Search capability.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that provides Google Search functionality using Gemini's built-in Grounding with Google Search feature.
+
+This project is inspired by the GoogleSearch tool from [gemini-cli](https://github.com/google-gemini/gemini-cli/blob/9897a2b80a6f371363faf1345f406ea581b841db/docs/tools/web-search.md).
 
 ## Features
 
-- Uses Gemini's built-in Google Search tool (@google/genai SDK)
+- Uses Gemini's built-in Grounding with Google Search feature
+- Provides real-time web search results with source citations
 - Compliant with MCP standard protocol
 - Written in TypeScript
 - Supports stdio transport
