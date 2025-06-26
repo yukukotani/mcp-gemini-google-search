@@ -2,6 +2,10 @@
 
 A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that provides Google Search functionality using Gemini's built-in [Grounding with Google Search](https://ai.google.dev/gemini-api/docs/google-search) feature.
 
+<a href="https://glama.ai/mcp/servers/@yukukotani/mcp-gemini-google-search">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@yukukotani/mcp-gemini-google-search/badge" alt="Gemini Google Search MCP server" />
+</a>
+
 This project is inspired by the GoogleSearch tool from [gemini-cli](https://github.com/google-gemini/gemini-cli/blob/9897a2b80a6f371363faf1345f406ea581b841db/docs/tools/web-search.md).
 
 ## Features
