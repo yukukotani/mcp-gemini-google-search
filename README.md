@@ -174,4 +174,4 @@ Running `npm run inspect` will open the MCP Inspector in your browser. This allo
 
 ## License
 
-MIT
+Apache License 2.0
