@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/yukukotani-mcp-gemini-google-search-badge.png)](https://mseep.ai/app/yukukotani-mcp-gemini-google-search)
+
 # MCP Gemini Google Search
 
 A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that provides Google Search functionality using Gemini's built-in [Grounding with Google Search](https://ai.google.dev/gemini-api/docs/google-search) feature.
