@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/yukukotani-mcp-gemini-google-search-badge.png)](https://mseep.ai/app/yukukotani-mcp-gemini-google-search)
+
 # MCP Gemini Google Search
 
 [日本語](README_ja.md)
