@@ -1,5 +1,7 @@
 # MCP Gemini Google Search
 
+[日本語](README_ja.md)
+
 A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that provides Google Search functionality using Gemini's built-in [Grounding with Google Search](https://ai.google.dev/gemini-api/docs/google-search) feature.
 
 This project is inspired by the GoogleSearch tool from [gemini-cli](https://github.com/google-gemini/gemini-cli/blob/9897a2b80a6f371363faf1345f406ea581b841db/docs/tools/web-search.md).
@@ -41,40 +43,53 @@ export GEMINI_MODEL="gemini-2.5-flash"  # Optional (default: gemini-2.5-flash)
 
 ### Claude Code Configuration
 
-Add the following to your Claude Code settings:
+You can set up this MCP server in Claude Code using the CLI:
 
 #### For Google AI Studio
-```json
-{
-  "mcpServers": {
-    "gemini-google-search": {
-      "command": "npx",
-      "args": ["mcp-gemini-google-search"],
-      "env": {
-        "GEMINI_API_KEY": "your-api-key-here",
-        "GEMINI_MODEL": "gemini-2.5-flash"
-      }
-    }
-  }
-}
+```bash
+# Add to user scope (available across all projects)
+claude mcp add gemini-google-search \
+  -s user \
+  -e GEMINI_API_KEY="your-api-key-here" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
+
+# Or add to project scope to share with your team
+claude mcp add gemini-google-search \
+  -s project \
+  -e GEMINI_API_KEY="your-api-key-here" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
 ```
 
 #### For Vertex AI
-```json
-{
-  "mcpServers": {
-    "gemini-google-search": {
-      "command": "npx",
-      "args": ["mcp-gemini-google-search"],
-      "env": {
-        "GEMINI_PROVIDER": "vertex",
-        "VERTEX_PROJECT_ID": "your-gcp-project-id",
-        "VERTEX_LOCATION": "us-central1",
-        "GEMINI_MODEL": "gemini-2.5-flash"
-      }
-    }
-  }
-}
+```bash
+# Add to user scope (available across all projects)
+claude mcp add gemini-google-search \
+  -s user \
+  -e GEMINI_PROVIDER="vertex" \
+  -e VERTEX_PROJECT_ID="your-gcp-project-id" \
+  -e VERTEX_LOCATION="us-central1" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
+
+# Or add to project scope to share with your team
+claude mcp add gemini-google-search \
+  -s project \
+  -e GEMINI_PROVIDER="vertex" \
+  -e VERTEX_PROJECT_ID="your-gcp-project-id" \
+  -e VERTEX_LOCATION="us-central1" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
+```
+
+#### Windows Users
+On Windows, wrap the npx command with `cmd /c`:
+
+```bash
+claude mcp add gemini-google-search \
+  -e GEMINI_API_KEY="your-api-key-here" \
+  -- cmd /c npx mcp-gemini-google-search
 ```
 
 ### Available Tools

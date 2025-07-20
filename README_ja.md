@@ -41,40 +41,53 @@ export GEMINI_MODEL="gemini-2.5-flash"  # オプション（デフォルト: gem
 
 ### Claude Code での設定
 
-Claude Code の設定に以下を追加：
+CLIを使用してMCPサーバーを設定できます：
 
 #### Google AI Studio を使用する場合
-```json
-{
-  "mcpServers": {
-    "gemini-google-search": {
-      "command": "npx",
-      "args": ["mcp-gemini-google-search"],
-      "env": {
-        "GEMINI_API_KEY": "your-api-key-here",
-        "GEMINI_MODEL": "gemini-2.5-flash"
-      }
-    }
-  }
-}
+```bash
+# userスコープに追加（全プロジェクトで利用可能）
+claude mcp add gemini-google-search \
+  -s user \
+  -e GEMINI_API_KEY="your-api-key-here" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
+
+# またはプロジェクトスコープに追加（チームで共有）
+claude mcp add gemini-google-search \
+  -s project \
+  -e GEMINI_API_KEY="your-api-key-here" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
 ```
 
 #### Vertex AI を使用する場合
-```json
-{
-  "mcpServers": {
-    "gemini-google-search": {
-      "command": "npx",
-      "args": ["mcp-gemini-google-search"],
-      "env": {
-        "GEMINI_PROVIDER": "vertex",
-        "VERTEX_PROJECT_ID": "your-gcp-project-id",
-        "VERTEX_LOCATION": "us-central1",
-        "GEMINI_MODEL": "gemini-2.5-flash"
-      }
-    }
-  }
-}
+```bash
+# userスコープに追加（全プロジェクトで利用可能）
+claude mcp add gemini-google-search \
+  -s user \
+  -e GEMINI_PROVIDER="vertex" \
+  -e VERTEX_PROJECT_ID="your-gcp-project-id" \
+  -e VERTEX_LOCATION="us-central1" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
+
+# またはプロジェクトスコープに追加（チームで共有）
+claude mcp add gemini-google-search \
+  -s project \
+  -e GEMINI_PROVIDER="vertex" \
+  -e VERTEX_PROJECT_ID="your-gcp-project-id" \
+  -e VERTEX_LOCATION="us-central1" \
+  -e GEMINI_MODEL="gemini-2.5-flash" \
+  -- npx mcp-gemini-google-search
+```
+
+#### Windows ユーザー
+Windowsでは、npxコマンドを`cmd /c`でラップしてください：
+
+```bash
+claude mcp add gemini-google-search \
+  -e GEMINI_API_KEY="your-api-key-here" \
+  -- cmd /c npx mcp-gemini-google-search
 ```
 
 ### 利用可能なツール
@@ -176,4 +189,4 @@ npm run inspect
 
 ## ライセンス
 
-MIT
+Apache License 2.0
